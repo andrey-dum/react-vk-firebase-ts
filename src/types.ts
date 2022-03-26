@@ -1,5 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 
+export interface IImage {
+    title: string;
+    img: string;   
+}
+
 export interface IUser {
     _id: string;
     name: string;
@@ -14,7 +19,7 @@ export interface IPost {
 
     author?: IUser;
     createdAt?: string;
-    images?: any[];
+    images?: IImage[];
 }
 
 export type TypeSetState<T> = Dispatch<SetStateAction<T>>;

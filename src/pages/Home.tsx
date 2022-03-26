@@ -1,7 +1,6 @@
-import { FC, useState } from "react"
+import { FC } from "react"
 import { Box } from "@mui/material"
 import { AddPost } from "../components/AddPost"
-import { IPost } from "../types"
 import { Posts } from "./Posts"
 
 interface IProps {
@@ -9,7 +8,7 @@ interface IProps {
 }
 
 const INITIAL_POST = {
-    _id: '1212',
+    _id: '121f2',
     title: "Initial Post",
 
     author: {
@@ -57,36 +56,35 @@ const INITIAL_POST = {
           img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
           title: 'Mushrooms',
         },
-        {
-          img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-          title: 'Tomato basil',
-        },
-        {
-          img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-          title: 'Sea star',
-        },
-        {
-          img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-          title: 'Bike',
-        },
+   
       ]
 }
 
+
 export const Home: FC<IProps> = () => {
-    const [posts, setPosts] = useState<IPost[]>([INITIAL_POST]);
+    // const [posts, setPosts] = useState<any[]>([]);
+
+    // const {db} = useAuth()
+
+    // const getPosts = async () => {
+    //   const querySnapshot = await getDocs(collection(db, "posts"));
+    //   const data = querySnapshot.docs.map((doc) => ({
+    //     // doc.data() is never undefined for query doc snapshots
+    //     ...doc.data(),
+    //     _id: doc.id,
+    //   } as IPost));
+    //   console.log(data)
+    //   setPosts([...data, ...posts])
+    // }
+
 
     return (
         <Box className="home">
-            <AddPost
-                setPosts={setPosts}
-            />
-
-            <Posts posts={posts} />
-            
+            <AddPost />
+            <Posts />
         </Box>
     )
 }
-
 
 
 

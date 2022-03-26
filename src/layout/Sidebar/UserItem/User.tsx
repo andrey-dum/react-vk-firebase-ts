@@ -1,12 +1,15 @@
 import styled from "@emotion/styled"
-import { Avatar, Box, Paper } from "@mui/material"
+import { Avatar, Box, Button, Paper, Skeleton } from "@mui/material"
+import { signOut } from "firebase/auth";
 import { FC } from "react"
 import { Link } from "react-router-dom";
-import { IUser } from "../../types";
+import { useAuth } from "../../../context/useAuth";
+import { IUser } from "../../../types";
 
 interface IProps {
-    user: IUser;
+    // user: IUser | null;
     me?: any;
+    // loading?: boolean;
 }
 
 type ItemProps = {
@@ -37,23 +40,30 @@ const StyledUserItem = styled(Paper)<ItemProps>`
     
 `;
 
-export const UserItem: FC<IProps> = ({ user, me }) => {
+export const User: FC<IProps> = ({ me }) => {
+
+    const {user, loading, auth} = useAuth()
+
+    if(loading || !user) {
+        return <Skeleton height={100} />
+    }
+    
     return (
-   
         <StyledUserItem variant="outlined" me={me}>
-            <Link to={"/profiles"} >
+            <Link to={`/profile/${user._id}`} >
                 <Box display={'flex'} alignItems={'center'} >
                 
                     <Box position="relative" mr={1}>
                         <Avatar src={user.avatar} />
-                        { user.online && <Box className="onlineDot" /> }
+                        { user?.online && <Box className="onlineDot" /> }
                     </Box>
                     
                     <span>{ user.name }</span>
                 </Box>
             </Link>
-            
+            <Box display='flex' justifyContent='flex-end'>
+                <Button onClick={() => signOut(auth)} variant="outlined" size="small">LogOut</Button>
+            </Box>
         </StyledUserItem>
-      
     )
 }

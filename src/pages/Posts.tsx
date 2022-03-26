@@ -1,18 +1,69 @@
-import { FC } from "react"
-import { Avatar, Box, ImageList, ImageListItem, Paper, Typography } from "@mui/material"
+import { FC, useEffect, useState } from "react"
+import { Avatar, Box, CircularProgress, ImageList, ImageListItem, Paper, Typography } from "@mui/material"
 import { IPost } from "../types"
 import { Link } from "react-router-dom"
+import { collection, onSnapshot } from "firebase/firestore"
+import { useAuth } from "../context/useAuth"
 
-interface IProps {
-    posts: IPost[];
-}
 
-export const Posts: FC<IProps> = ({ posts }) => {
+
+export const Posts: FC = () => {
+
+    const [posts, setPosts] = useState<any[]>([]);
+    const [loading, setLoading ] = useState(true)
+    
+    const {db} = useAuth()
+
+    useEffect(() => {
+
+        const unsub = onSnapshot(collection(db, "posts"), (querySnapshot) => {
+          let p: IPost[] = []
+          console.log(p)
+          querySnapshot.docs.forEach((d) => {
+            p.push({
+              ...d.data(),
+              _id: d.id,
+            } as IPost)
+          });
+          setPosts([...p]);
+
+          setLoading(false)
+          // setPosts(prev => [...p, ...prev])
+        })
+    
+          return () => { unsub() }
+    
+        }, [])
+
+        if(loading) {
+            return <Box 
+                display='flex' 
+                justifyContent='center' 
+                alignItems='center'
+                style={{height: '160px'}}
+            >
+                <CircularProgress />
+            </Box>
+        }
+        
+        if(!posts.length) {
+            return <Box 
+                display='flex' 
+                justifyContent='center' 
+                alignItems='center'
+                style={{height: '160px'}}
+            >
+                <Typography style={{fontWeight: '800', color: '#ccc', fontSize: 30}}>
+                    Posts not found...
+                </Typography>
+            </Box>
+        }
+
 
     return (
         <Box mt={3}>
             { posts?.map((post: IPost) => (
-                <Paper key={post._id} sx={{padding: '15px'}}>
+                <Paper key={post._id} sx={{padding: '15px', marginBottom: '20px'}} variant="outlined">
                     <Box display='flex' alignItems='center'>
                         <Box mr={1}><Avatar src={post.author?.avatar} /></Box>
                         <Box>
@@ -27,7 +78,7 @@ export const Posts: FC<IProps> = ({ posts }) => {
                             </Typography>
                         </Box>
                     </Box>
-                    <Box mt={3}>
+                    <Box mt={3} mb={3}>
                         {post.title}
                     </Box>
                     { post.images?.length 

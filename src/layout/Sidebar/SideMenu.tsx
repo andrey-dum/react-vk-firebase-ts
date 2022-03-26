@@ -39,7 +39,7 @@ interface IProps {
 
 const StyledList = styled(Box)`
     background-color: #f1f7fa;
-    border-radius: 8px;
+    border-radius: 4px;
     margin-top: 25px;
     overflow: hidden;
 
@@ -54,9 +54,10 @@ const StyledList = styled(Box)`
 
     .MuiListItem-root {
         background-color: #f1f7fa;
+        color: #222;
         
         .MuiListItemButton-root {
-            padding: 15px 10px;
+            padding: 10px 10px;
             
         }
         
@@ -79,7 +80,7 @@ export const SideMenu: FC<IProps> = () => {
                         component={Link} 
                         to={path}
                         key={id}
-                        selected={path == location.pathname}
+                        selected={path === location.pathname}
                         disablePadding
                     >
                         <ListItemButton  dense>
