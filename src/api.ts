@@ -19,23 +19,9 @@ export const AuthApi = {
 }
 
 // Get a list of cities from your database
-export async function getPosts(db: any) {
-    const citiesCol = collection(db, 'posts');
-    const citySnapshot = await getDocs(citiesCol);
-    const cityList = citySnapshot.docs.map(doc => doc.data());
-    return cityList;
-  }
-
-
-   // createUserWithEmailAndPassword(auth, email, password)
-            //     .then((userCredential) => {
-            //         // Signed in 
-            //         const user = userCredential.user;
-            //         console.log(user)
-            //         // ...
-            //     })
-            //     .catch((error) => {
-            //         const errorCode = error.code;
-            //         const errorMessage = error.message;
-            //         // ..
-            //     });
+// export async function getPosts(db: any) {
+//     const citiesCol = collection(db, 'posts');
+//     const citySnapshot = await getDocs(citiesCol);
+//     const cityList = citySnapshot.docs.map(doc => doc.data());
+//     return cityList;
+//   }

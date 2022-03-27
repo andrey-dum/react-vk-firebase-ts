@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 import { Alert, Box, Button, TextField, Typography } from "@mui/material"
+import { updateProfile } from "firebase/auth";
 import { ChangeEvent, FC, SyntheticEvent, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { AuthApi } from "../../api";
 import { useAuth } from "../../context/useAuth";
+import { Layout } from "../../layout/Layout";
 
 
 interface IProps {
@@ -11,6 +13,7 @@ interface IProps {
 }
 
 interface IUserData {
+    name?: string;
     email: string;
     password: string;
 }
@@ -30,7 +33,7 @@ export const AuthPage: FC<IProps> = () => {
     const {user} = useAuth()
     const navigate = useNavigate();
 
-    const [data, setData] = useState<IUserData>({email: '', password: ''});
+    const [data, setData] = useState<IUserData>({name: '',email: '', password: ''});
     const [isRegForm, setIsRegForm] = useState(false);
     const [error, setError] = useState(null);
 
@@ -49,6 +52,10 @@ export const AuthPage: FC<IProps> = () => {
             //register
             try {
                 const user = await AuthApi.register(email, password)
+                await updateProfile(user, {
+                    displayName: data.name
+                })
+
             } catch (error: any) {
                 // const errorCode = error.code;
                 const errorMessage = error.message;
@@ -59,6 +66,7 @@ export const AuthPage: FC<IProps> = () => {
         //login
         try {
             const user = await AuthApi.login(email, password)
+           
         } catch (error: any) {
             // const errorCode = error.code;
             const errorMessage = error.message;
@@ -76,13 +84,26 @@ export const AuthPage: FC<IProps> = () => {
     }
 
     return (
+        <Layout>
         <Box mt={3} display='flex' justifyContent='center'>
-        <form onSubmit={handleLogin} style={{maxWidth: 600}}>
+        <form onSubmit={handleLogin} style={{maxWidth: 420}}>
 
             <Typography variant="h5" paragraph>
                 {isRegForm ? 'Registration' : 'Sign In'}
             </Typography>
 
+            {
+                isRegForm &&
+                    <TextField 
+                        type='text'
+                        name='name'
+                        label='Name'
+                        value={data.name}
+                        onChange={handleChange}
+                        fullWidth
+                        style={{marginBottom: '20px'}}
+                    />
+            }
             <TextField 
                 type='email'
                 name='email'
@@ -145,7 +166,7 @@ export const AuthPage: FC<IProps> = () => {
         </form>
         
         </Box>
-            
+        </Layout>    
     )
 }
 

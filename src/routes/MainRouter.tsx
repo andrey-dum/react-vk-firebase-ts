@@ -37,7 +37,7 @@ export const MainRouter: FC<IProps> = () => {
     }
 
     return (
-        <Layout>
+        // <Layout>
             <Routes>
                 {
                     routes.map(r =>
@@ -52,6 +52,6 @@ export const MainRouter: FC<IProps> = () => {
                     )
                 }
             </Routes>
-        </Layout>
+        // </Layout>
     )
 }

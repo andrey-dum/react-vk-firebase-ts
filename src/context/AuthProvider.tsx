@@ -25,7 +25,6 @@ export const AuthProvider: FC = ({children}) => {
         
         setLoading(true)
         const unListen = onAuthStateChanged(auth, (user) => {
-          
             setUser(user ? {
                 _id: user.uid,
                 avatar: users[0].avatar,

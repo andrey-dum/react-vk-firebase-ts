@@ -14,7 +14,7 @@ export const Layout: FC<IProps> = ({ children }) => {
     return (
         <div className="page">
             <Header />
-            <Container maxWidth="md">
+            <Container maxWidth="lg">
                 <Grid container spacing={2} marginTop={2}>
                     {user &&
                         <Grid item sm={3}>

@@ -1,3 +1,4 @@
+import { FieldValue } from "firebase/firestore";
 import { Dispatch, SetStateAction } from "react";
 
 export interface IImage {
@@ -18,8 +19,16 @@ export interface IPost {
     title: string;
 
     author?: IUser;
-    createdAt?: string;
+    createdAt?: any;
     images?: IImage[];
+    timestamp?: any;
+}
+
+export interface IMessage {
+    _id: string;
+    text: string;
+    createdAt?: string;
+    author: any;
 }
 
 export type TypeSetState<T> = Dispatch<SetStateAction<T>>;

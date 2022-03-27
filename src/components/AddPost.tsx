@@ -3,7 +3,7 @@ import styled from "@emotion/styled"
 import { Box, Button, Paper, TextField, Typography } from "@mui/material"
 import { IPost, TypeSetState } from "../types";
 import { useAuth } from "../context/useAuth";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 
 interface IProps {
@@ -51,7 +51,8 @@ export const AddPost: FC<IProps> = ({
             const newPost: IPost = {
                 ...post,
                 author: user,
-                createdAt: '5 min ago'
+                createdAt: serverTimestamp(),
+                timestamp: serverTimestamp()
             }
 
             setLoading(true)

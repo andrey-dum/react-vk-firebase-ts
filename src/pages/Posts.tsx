@@ -11,6 +11,7 @@ export const Posts: FC = () => {
 
     const [posts, setPosts] = useState<any[]>([]);
     const [loading, setLoading ] = useState(true)
+
     
     const {db} = useAuth()
 
@@ -18,7 +19,7 @@ export const Posts: FC = () => {
 
         const unsub = onSnapshot(collection(db, "posts"), (querySnapshot) => {
           let p: IPost[] = []
-          console.log(p)
+        //   console.log(p)
           querySnapshot.docs.forEach((d) => {
             p.push({
               ...d.data(),
@@ -74,7 +75,7 @@ export const Posts: FC = () => {
                                 
                             </Typography>
                             <Typography variant="caption" sx={{color: '#999'}}>
-                                {post?.createdAt}
+                                { new Date(post?.timestamp?.toDate()).toUTCString() }
                             </Typography>
                         </Box>
                     </Box>

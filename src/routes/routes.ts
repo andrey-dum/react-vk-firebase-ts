@@ -11,12 +11,12 @@ export const routes = [
         component: Home,
         auth: true
     },
-    // {
-    //     path: '/profile',
-    //     exact: true,
-    //     component: Profile,
-    //     auth: true
-    // },
+    {
+        path: '/profile',
+        exact: true,
+        component: Profile,
+        auth: true
+    },
     {
         path: '/profile/:id',
         exact: false,

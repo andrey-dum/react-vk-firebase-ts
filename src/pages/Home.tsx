@@ -2,6 +2,7 @@ import { FC } from "react"
 import { Box } from "@mui/material"
 import { AddPost } from "../components/AddPost"
 import { Posts } from "./Posts"
+import { Layout } from "../layout/Layout"
 
 interface IProps {
 
@@ -79,10 +80,12 @@ export const Home: FC<IProps> = () => {
 
 
     return (
-        <Box className="home">
-            <AddPost />
-            <Posts />
-        </Box>
+        <Layout>
+          <Box className="home">
+              <AddPost />
+              <Posts />
+          </Box>
+        </Layout>
     )
 }
 
